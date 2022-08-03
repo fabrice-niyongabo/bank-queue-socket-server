@@ -1,0 +1,21 @@
+{
+  "name": "queuemanagement",
+  "version": "1.0.0",
+  "description": "'socket io server for bank queue app'",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "ninga.fab@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.17.3",
+    "socket.io": "^4.4.1"
+  },
+  "engines": {
+    "node": "v16.14.2"
+  }
+}
