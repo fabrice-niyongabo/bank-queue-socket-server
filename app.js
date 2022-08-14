@@ -40,46 +40,64 @@ app.get("/", (req, res) => {
 });
 
 app.get("/addclient", (req, res) => {
-  const io = req.app.get("socketio");
-  const date = new Date();
-  io.emit("addClient", {
-    id: "",
-    name: "Anonymous",
-    day: date.getDay(),
-    month: date.getMonth(),
-    year: date.getFullYear(),
-    joinedTimeAndDate: date,
-    leaveTimeAndDate: "-",
-    status: "online",
-  });
-  Axios.get(
-    process.env.API_URL +
-      "/addclient/?day=" +
-      date.getDate() +
-      "&month=" +
-      (date.getMonth() + 1) +
-      "&year=" +
-      date.getFullYear() +
-      "&jsonDate=" +
-      date
-  )
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((error) => console.log(error.message));
-  res.json({ msg: "Client added to queue!" });
+  const { value } = req.query;
+  if (value) {
+    if (value == true || value == 1) {
+      const io = req.app.get("socketio");
+      const date = new Date();
+      io.emit("addClient", {
+        id: "",
+        name: "Anonymous",
+        day: date.getDay(),
+        month: date.getMonth(),
+        year: date.getFullYear(),
+        joinedTimeAndDate: date,
+        leaveTimeAndDate: "-",
+        status: "online",
+      });
+      Axios.get(
+        process.env.API_URL +
+          "/addclient/?day=" +
+          date.getDate() +
+          "&month=" +
+          (date.getMonth() + 1) +
+          "&year=" +
+          date.getFullYear() +
+          "&jsonDate=" +
+          date
+      )
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((error) => console.log(error.message));
+      return res.status(200).send("User added to queue!");
+    } else {
+      return res.status(401).send("No user to add to queue");
+    }
+  } else {
+    return res.status(400).send("Invalid request");
+  }
 });
 
 app.get("/removeclient", (req, res) => {
-  const io = req.app.get("socketio");
-  const date = new Date();
-  Axios.get(process.env.API_URL + "/removeclient/?sd=" + date)
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((error) => console.log(error.message));
-  io.emit("removeClient", "");
-  res.json({ msg: "Client remove from the queue!" });
+  const { value } = req.query;
+  if (value) {
+    if (value == true || value == 1) {
+      const io = req.app.get("socketio");
+      const date = new Date();
+      Axios.get(process.env.API_URL + "/removeclient/?sd=" + date)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((error) => console.log(error.message));
+      io.emit("removeClient", "");
+      return res.status("User removed from the queue!");
+    } else {
+      return res.status(401).send("No user to remove from the queue");
+    }
+  } else {
+    return res.status(400).send("Invalid request");
+  }
 });
 
 const port = process.env.PORT || 5000;
