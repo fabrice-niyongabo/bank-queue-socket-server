@@ -91,7 +91,7 @@ app.get("/removeclient", (req, res) => {
         })
         .catch((error) => console.log(error.message));
       io.emit("removeClient", "");
-      return res.status("User removed from the queue!");
+      return res.status(400).send("User removed from the queue!");
     } else {
       return res.status(401).send("No user to remove from the queue");
     }
