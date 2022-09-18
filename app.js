@@ -43,7 +43,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/payment", (req, res) => {
-  console.log("payment confirm object", req);
+  console.log("payment confirm object", req.body);
   res.send("received");
 });
 
