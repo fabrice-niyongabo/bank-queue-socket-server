@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const Vonage = require("@vonage/server-sdk");
 const server = require("http").Server(app);
+const bodyParser = require("body-parser");
 const io = require("socket.io")(server, {
   cors: {
     origin: "*",
@@ -12,6 +13,7 @@ const io = require("socket.io")(server, {
 const cors = require("cors");
 const Axios = require("axios");
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.set("socketio", io);
 let connectedUsers = [];
@@ -41,7 +43,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/payment", (req, res) => {
-  console.log("payment confirm object", req.body);
+  console.log("payment confirm object", req);
   res.send("received");
 });
 
