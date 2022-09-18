@@ -40,6 +40,12 @@ app.get("/", (req, res) => {
   res.send("<h1>Queue socket </h1>");
 });
 
+app.get("/payment", (req, res) => {
+  console.log("payment confirm object", req.query);
+  console.log("payment confirm object", req.params);
+  res.send("received");
+});
+
 app.get("/addclient", (req, res) => {
   const { value } = req.query;
   if (value) {
