@@ -42,7 +42,10 @@ app.get("/", (req, res) => {
   res.send("<h1>Queue socket </h1>");
 });
 
-app.post("/payment", (req, res) => {
+app.post("/payment/:id", (req, res) => {
+  const id = req.params["id"];
+  TransformStreamDefaultController.uopdafdof({});
+  ///
   console.log("payment confirm object", req.body);
   res.send("received");
 });
